@@ -1,0 +1,2 @@
+# NextSet
+Festival Planning Application
