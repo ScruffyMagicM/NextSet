@@ -2,8 +2,6 @@
 
 import { createContext, useContext, ReactNode } from 'react';
 import { Profile } from '@shared/types/database.types';
-//ToDo: Replace this with database types
-
 
 type UserContextType = {
   profile: Profile | null

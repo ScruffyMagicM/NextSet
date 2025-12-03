@@ -1,10 +1,10 @@
 'use client'
 
-import { createClient } from '../auth/supabase/client'
+import { createClient } from '@/auth/supabase/client'
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 
-export default function LoginPage() {
+export default function LoginModal({ onClose }: { onClose: () => void }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
@@ -13,21 +13,21 @@ export default function LoginPage() {
   const supabase = createClient();
 
   const handleEmailLogin = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
+    e.preventDefault()
+    setLoading(true)
 
     const { error } = await supabase.auth.signInWithPassword({
       email,
       password,
-    });
+    })
 
     if (error) {
-      alert(error.message);
+      alert(error.message)
     } else {
-      router.push('/');
-      router.refresh();
+      onClose()
+      router.refresh()
     }
-    setLoading(false);
+    setLoading(false)
   }
 
   const handleGoogleLogin = async () => {
@@ -37,7 +37,7 @@ export default function LoginPage() {
         redirectTo: `${window.location.origin}/auth/callback`,
       },
     })
-    if (error) alert(error.message);
+    if (error) alert(error.message)
   }
 
   const handleSignUp = async (e: React.FormEvent) => {
@@ -56,16 +56,32 @@ export default function LoginPage() {
       alert(error.message)
     } else {
       alert('Check your email for the confirmation link!')
+      onClose()
     }
     setLoading(false)
   }
 
-
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 px-4 py-12">
-      <div className="max-w-md w-full space-y-8">
-        {/* Card */}
-        <div className="bg-white rounded-2xl shadow-xl p-8">
+    <>
+      {/* Backdrop */}
+      <div 
+        className="fixed inset-0 bg-black bg-opacity-30 z-40"
+        onClick={onClose}
+      />
+      
+      {/* Modal */}
+      <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+        <div className="bg-white rounded-2xl shadow-xl p-8 max-w-md w-full max-h-[90vh] overflow-y-auto">
+          {/* Close button */}
+          <button
+            onClick={onClose}
+            className="absolute top-4 right-4 text-gray-400 hover:text-gray-600"
+          >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+
           {/* Header */}
           <div className="text-center mb-8">
             <h2 className="text-3xl font-bold text-gray-900">
@@ -73,8 +89,8 @@ export default function LoginPage() {
             </h2>
             <p className="mt-2 text-sm text-gray-600">
               {isSignUp
-                ? 'Sign up to get started'
-                : 'Sign in to your account'}
+                ? 'Sign up to continue'
+                : 'Sign in to continue'}
             </p>
           </div>
 
@@ -168,13 +184,12 @@ export default function LoginPage() {
                 : "Don't have an account? Sign Up"}
             </button>
           </div>
-        </div>
 
-        {/* Footer */}
-        <p className="text-center text-sm text-gray-600">
-          By continuing, you agree to our Terms of Service and Privacy Policy
-        </p>
+          <p className="text-center text-xs text-gray-500 mt-4">
+            By continuing, you agree to our Terms of Service and Privacy Policy
+          </p>
+        </div>
       </div>
-    </div>
+    </>
   )
 }

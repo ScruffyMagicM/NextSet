@@ -1,7 +1,9 @@
 import Link from "next/link";
-import { createClient } from "@/auth/supabase/client";
+import { createClient } from "@/auth/supabase/server";
 import { redirect } from "next/navigation";
 import { getProfile } from "@/auth/supabase/getProfile";
+import LoginButton from "@/auth/ui/login.button";
+import { revalidatePath } from "next/cache";
 
 async function signOut() {
     //TODO: Create a prompt for this instead of automatic sign out
@@ -9,7 +11,7 @@ async function signOut() {
     'use server'
     const supabase = await createClient();
     await supabase.auth.signOut();
-    redirect('/login');
+    revalidatePath('/', 'layout')
 }
 
 export default async function SideNav() {
@@ -18,11 +20,12 @@ export default async function SideNav() {
     return (
         <div className="h-full bg-gray-800 text-white p-6">
             <div className="flex">
-                <div className="flex-initial justify-left w-5/6">
+                <div className="flex-initial justify-start w-6/8">
                     <h2 className="text-2xl font-bold mb-6"><Link href="/">NextSet</Link></h2>
                 </div>
-                <div className="flex-none justify-right w-1/6">
-                    <h2 className="text-2xl font-bold mb-6"><Link href="/user"><img src={user?.profile.pfp_url || "/default_pfp.png"} alt="NS"></img></Link></h2>
+                <div className="flex justify-between w-2/8">
+                    <h2 className="text-2xl font-bold mb-6" hidden={user === null}><Link href="/user"><img src={user?.profile.pfp_url || "/pfp.png"} alt="NS"></img></Link></h2>
+                    <h2 className="justify-end" hidden={user !== null}><LoginButton /></h2>
                 </div>
             </div>
             <nav className="space-y-4">

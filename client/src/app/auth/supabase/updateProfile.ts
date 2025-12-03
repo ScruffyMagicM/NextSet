@@ -11,24 +11,18 @@ export default async function updateProfile(newProfileData: Profile): Promise<bo
 
     const currUser = await getProfile();
 
-    console.log('Current User in updateProfile:', currUser);
-    console.log('New user data in updateProfile:', newProfileData);
-
     if (!currUser) return false;
 
     const supabase = await createClient();
 
     try {
         if (newProfileData.email !== currUser.profile.email) {
-            console.log('Updating user email to:', newProfileData.email);
             const authResponse = await supabase.auth.updateUser({ email: newProfileData.email });
             if (authResponse.error) {
                 console.error('Error updating user:', authResponse.error);
                 throw authResponse.error;
             }
         }
-
-        console.log('Updating profile data to:', newProfileData);
 
         //Email address update is handled via supabase sql trigger to auth.users table
         const profileResponse = await supabase

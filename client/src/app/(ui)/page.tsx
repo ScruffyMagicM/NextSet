@@ -1,19 +1,13 @@
-import { createClient } from '@/auth/supabase/server';
-import { redirect } from 'next/navigation';
+import { getProfile } from '@/auth/supabase/getProfile';
 
 export default async function DashboardPage() {
-  const supabase = await createClient();
-  
-  const { data: { user }, error } = await supabase.auth.getUser();
-
-  if (error || !user) {
-    redirect('/login');
-  }
+ 
+  const user = await getProfile();
 
   return (
     <div className="p-8">
       <h1 className="text-2xl font-bold mb-4">Dashboard</h1>
-      <p className="mb-4">Welcome, {user.email}</p>
+      <p className="mb-4">Welcome, {user?.profile.email ?? 'Guest'}</p>
     </div>
   )
 }
