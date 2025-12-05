@@ -24,10 +24,10 @@ export default function LoginModal({ onClose }: { onClose: () => void }) {
     if (error) {
       alert(error.message)
     } else {
-      onClose()
-      router.refresh()
+      onClose();
+      router.refresh();
     }
-    setLoading(false)
+    setLoading(false);
   }
 
   const handleGoogleLogin = async () => {
@@ -106,7 +106,7 @@ export default function LoginModal({ onClose }: { onClose: () => void }) {
                 placeholder="you@example.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all outline-none"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-gray-700 outline-none"
                 required
                 disabled={loading}
               />
@@ -122,7 +122,7 @@ export default function LoginModal({ onClose }: { onClose: () => void }) {
                 placeholder="••••••••"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all outline-none"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-gray-700 outline-none"
                 required
                 disabled={loading}
               />

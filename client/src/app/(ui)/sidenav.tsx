@@ -34,7 +34,7 @@ export default async function SideNav() {
                 <Link href="/announcements" className="block px-4 py-2 rounded hover:bg-gray-700">Announcements</Link>
                 <hr/>
 
-                <form className="px-4 py-2 rounded" action={signOut}>
+                <form className="px-4 py-2 rounded" hidden={user === null} action={signOut}>
                     <button
                         type="submit"
                         className="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors cursor-pointer"
