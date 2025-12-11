@@ -1,6 +1,6 @@
 'use client'
 
-import { createClient } from '@/auth/supabase/client';
+import { createClient } from '@/supabase/client';
 import { useState } from 'react';
 
 //#TODO Figure out how to better size the upload PFP button

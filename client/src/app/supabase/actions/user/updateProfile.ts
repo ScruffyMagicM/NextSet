@@ -1,6 +1,6 @@
 'use server'
 
-import { createClient } from './server'
+import { createClient } from '@/supabase/server'
 import { getProfile } from './getProfile'
 import { Profile } from '@shared/types/database.types';
 import { revalidatePath } from 'next/cache'

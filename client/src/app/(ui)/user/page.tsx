@@ -1,5 +1,5 @@
 import { UserDetailsComponent } from "./userdetails.tsx";
-import updateProfile from "@/auth/supabase/updateProfile";
+import updateProfile from "@/supabase/actions/user/updateProfile.ts";
 
 export default function UserPage() {
 

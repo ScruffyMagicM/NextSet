@@ -1,7 +1,6 @@
 import Link from "next/link";
-import { createClient } from "@/auth/supabase/server";
-import { redirect } from "next/navigation";
-import { getProfile } from "@/auth/supabase/getProfile";
+import { createClient } from "@/supabase/server";
+import { getProfile } from "@/supabase/actions/user/getProfile";
 import LoginButton from "@/auth/ui/login.button";
 import { revalidatePath } from "next/cache";
 
@@ -29,7 +28,7 @@ export default async function SideNav() {
                 </div>
             </div>
             <nav className="space-y-4">
-                <Link href="/festivals" className="block px-4 py-2 rounded hover:bg-gray-700">Festivals</Link>
+                <Link href="/upcomingfestivals" className="block px-4 py-2 rounded hover:bg-gray-700">Upcoming Festivals</Link>
                 <Link href="/pastfestivals" className="block px-4 py-2 rounded hover:bg-gray-700">Past Festivals</Link>
                 <Link href="/announcements" className="block px-4 py-2 rounded hover:bg-gray-700">Announcements</Link>
                 <hr/>

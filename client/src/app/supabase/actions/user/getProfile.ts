@@ -1,5 +1,5 @@
-import { createClient } from './server'
-import { cache } from 'react'
+import { createClient } from '@/supabase/server';
+import { cache } from 'react';
 
 // cache() ensures this is only called once per request
 export const getProfile = cache(async () => {

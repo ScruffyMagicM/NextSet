@@ -1,4 +1,4 @@
-import { getProfile } from '@/auth/supabase/getProfile';
+import { getProfile } from '@/supabase/actions/user/getProfile';
 
 export default async function DashboardPage() {
  
