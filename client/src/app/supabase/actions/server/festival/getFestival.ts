@@ -19,7 +19,7 @@ export default async function getFestival(id: number): Promise<Festival> {
         .single();
 
     if (error) {
-        console.error('Error fetching festival:', error);
+        console.error('Error fetching festival:', error.message);
         return {} as Festival;
     }
 

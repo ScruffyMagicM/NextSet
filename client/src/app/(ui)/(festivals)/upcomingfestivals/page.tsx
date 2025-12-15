@@ -1,4 +1,4 @@
-import getFestivals from "@/supabase/actions/festival/getFestivals";
+import getFestivals from "@/supabase/actions/server/festival/getFestivals";
 import MonthComponent from "@/(ui)/(festivals)/month.component";
 
 export default async function FestivalsPage() {

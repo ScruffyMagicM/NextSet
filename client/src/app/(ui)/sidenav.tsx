@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { createClient } from "@/supabase/server";
-import { getProfile } from "@/supabase/actions/user/getProfile";
+import { getProfile } from "@/supabase/actions/server/user/getProfile";
 import LoginButton from "@/auth/ui/login.button";
 import { revalidatePath } from "next/cache";
 

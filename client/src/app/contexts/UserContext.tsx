@@ -1,7 +1,7 @@
 'use client'
 
 import { createContext, useContext, ReactNode } from 'react';
-import { Profile } from '@shared/types/database.types';
+import { Profile } from '@shared/types/user.types';
 
 type UserContextType = {
   profile: Profile | null

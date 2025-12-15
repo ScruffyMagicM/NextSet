@@ -4,3 +4,9 @@ export type Profile = {
   pfp_url: string | null
   email: string
 }
+
+export type UserSet = {
+  user_id: string,
+  set_id: number,
+  rank: number
+}

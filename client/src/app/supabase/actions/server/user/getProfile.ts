@@ -20,7 +20,7 @@ export const getProfile = cache(async () => {
     .single();
 
   if (profileError) {
-    console.error('Error fetching profile:', profileError);
+    console.error('Error fetching profile:', profileError.message);
     return null;
   }
 

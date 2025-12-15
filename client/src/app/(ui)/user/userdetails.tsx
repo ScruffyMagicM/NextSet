@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useUser } from '@/contexts/UserContext';
-import { Profile } from "@shared/types/database.types";
+import { Profile } from "@shared/types/user.types";
 import PfpUpload from "./pfpUpload";
 
 export function UserDetailsComponent({updateProfile}: {updateProfile: (newProfileData: Profile) => Promise<boolean>}) {

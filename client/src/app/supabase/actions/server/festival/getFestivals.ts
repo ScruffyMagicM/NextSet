@@ -10,7 +10,7 @@ export default async function getFestivals() {
         .order('start_date', { ascending: false });
 
     if (error) {
-        console.error('Error fetching festivals:', error);
+        console.error('Error fetching festivals:', error.message);
         return [];
     }
 

@@ -2,7 +2,7 @@
 
 import { createClient } from '@/supabase/server'
 import { getProfile } from './getProfile'
-import { Profile } from '@shared/types/database.types';
+import { Profile } from '@shared/types/user.types';
 import { revalidatePath } from 'next/cache'
 
 //TODO: Implement response type to indicate success/failure with error details
@@ -19,7 +19,7 @@ export default async function updateProfile(newProfileData: Profile): Promise<bo
         if (newProfileData.email !== currUser.profile.email) {
             const authResponse = await supabase.auth.updateUser({ email: newProfileData.email });
             if (authResponse.error) {
-                console.error('Error updating user:', authResponse.error);
+                console.error('Error updating user:', authResponse.error.message);
                 throw authResponse.error;
             }
         }
@@ -34,7 +34,7 @@ export default async function updateProfile(newProfileData: Profile): Promise<bo
             .eq('id', currUser.user.id);
 
         if (profileResponse.error) {
-            console.error('Error updating profile:', profileResponse.error);
+            console.error('Error updating profile:', profileResponse.error.message);
             throw profileResponse.error;
         }
 

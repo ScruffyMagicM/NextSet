@@ -1,4 +1,4 @@
-import getFestival from "@/supabase/actions/festival/getFestival";
+import getFestival from "@/supabase/actions/server/festival/getFestival";
 import Lineup from "../lineup.component";
 
 export default async function FestivalPage({ params }: { params: Promise<{ id: number }> }) {
