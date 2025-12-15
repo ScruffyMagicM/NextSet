@@ -1,11 +1,12 @@
 import getFestivals from "@/supabase/actions/server/festival/getFestivals";
-import MonthComponent from "@/(ui)/(festivals)/month.component";
+import FestivalListComponent from "../festivalList.component";
+import { Festival } from "@shared/types/festival.types";
 
 export default async function FestivalsPage() {
-    
+
     const festivals = await getFestivals();
-    
-    const festivalsByMonth = festivals.reduce((acc: any, festival) => {
+
+    const festivalsByMonth = festivals.reduce<Record<string, Festival>>((acc: any, festival) => {
         const month = new Date(festival.start_date).toLocaleString('default', { month: 'long', year: 'numeric' });
         if (!acc[month]) {
             acc[month] = [];
@@ -14,17 +15,7 @@ export default async function FestivalsPage() {
         return acc;
     }, {});
 
-    const monthsGroups = Object.keys(festivalsByMonth).map((month: string) => (
-            <div key={month} className="mb-2">
-                <MonthComponent month={month} festivals={festivalsByMonth[month]} />
-                <hr />
-            </div>
-        ));
-
     return (
-        <div>
-            <h1 className="text-3xl font-bold mb-2">Festivals Page</h1>
-            {monthsGroups}
-        </div>
+        <FestivalListComponent festivalsByMonth={festivalsByMonth}/>
     );
 }
