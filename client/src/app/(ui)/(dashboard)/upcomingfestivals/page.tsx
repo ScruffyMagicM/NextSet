@@ -1,5 +1,5 @@
 import getFestivals from "@/supabase/actions/server/festival/getFestivals";
-import FestivalListComponent from "../festivalList.component";
+import FestivalListComponent from "../components/festivalList.component";
 import { Festival } from "@shared/types/festival.types";
 
 export default async function FestivalsPage() {

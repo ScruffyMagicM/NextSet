@@ -5,7 +5,7 @@ import { useState } from 'react';
 
 export default function LoginButton() {
 
-    const [isLoginModalOpen, setIsLoginModalOpen] = useState(false)
+    const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
 
     return (
         <div>

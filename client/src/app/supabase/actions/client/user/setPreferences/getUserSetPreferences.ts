@@ -24,7 +24,7 @@ export default async function getUserSetPreferences(user_id: string, festival_id
 
     preferences?.forEach((pref: any) => {
         setsDTO.set(pref.set_id, {
-            id: pref.id,
+            user_id: pref.id,
             set_id: pref.set_id,
             rank: pref.rank
         });

@@ -11,8 +11,6 @@ export const getProfile = cache(async () => {
     return null;
   }
 
-  console.log('User Id: ' + user.id);
-
   const { data: profile, error: profileError } = await supabase
     .from('userprofiles')    
     .select('id, username, pfp_url, email')

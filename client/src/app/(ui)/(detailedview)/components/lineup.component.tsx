@@ -1,12 +1,12 @@
 'use client';
 
-import getUserSetPreferences from "@/supabase/actions/client/user/getUserSetPreferences";
+import getUserSetPreferences from "@/supabase/actions/client/user/setPreferences/getUserSetPreferences";
 import { Festival, Set } from "@shared/types/festival.types";
 import { useUser } from '@/contexts/UserContext';
 import { useEffect, useState } from "react";
 import { UserSet } from "@shared/types/user.types";
-import deleteUserSetPreference from "@/supabase/actions/client/user/deleteUserSetPreference";
-import upsertUserSetPreference from "@/supabase/actions/client/user/upsertUserSetPreference";
+import deleteUserSetPreference from "@/supabase/actions/client/user/setPreferences/deleteUserSetPreference";
+import upsertUserSetPreference from "@/supabase/actions/client/user/setPreferences/upsertUserSetPreference";
 
 export default function Lineup({ festival }: { festival: Festival }) {
     const [selectedDay, setSelectedDay] = useState(0);
