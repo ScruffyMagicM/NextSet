@@ -3,53 +3,38 @@
 import { createClient } from '@/supabase/client'
 import { useState } from 'react'
 import { useUser } from '@/contexts/UserContext';
-import { group } from 'console';
+import { useFestival } from '@/contexts/FestivalContext';
+import createGroup from '@/supabase/actions/client/groups/createGroup';
 
-export default function CreateGroupModal({ onCloseCreate, onCloseQuit, festival_id }: { onCloseCreate: (newGroups: Record<number, { name: string; member_count: number }>) => void, onCloseQuit: () => void, festival_id: number }) {
+export default function CreateGroupModal({ onCloseCreate, onCloseQuit }: { onCloseCreate: (newGroups: Record<number, { name: string; member_count: number }>) => void, onCloseQuit: () => void }) {
   const supabase = createClient();
   const { profile } = useUser();
+  const { festival } = useFestival();
 
   const [groupName, setGroupName] = useState('');
   const [loading, setLoading] = useState(false);
 
-    const handleCreate = async (e: React.FormEvent) => {
-        e.preventDefault();
-        setLoading(true);
+  const handleCreate = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
 
-        try {
-            const { data, error } = await supabase
-                .from('festivalgroups')
-                .insert([{ name: groupName, festival_id: festival_id }])
-                .select('id')
-                .single();
-            if (error) {
-                console.error('Error creating group:', error.message);
-            } else {
-                const { error: groupError } = await supabase
-                    .from('usergroups')
-                    .insert([{ user_id: profile!.id, group_id: data.id }]);
-                if (groupError) {
-                    console.error('Error adding user to group:', groupError.message);
-                } else {
-                    console.log('Group created and user added successfully');
-                    const newGroupData: Record<number, { name: string; member_count: number }> = {
-                        [data.id]: {
-                            name: groupName,
-                            member_count: 1
-                        }
-                    };
-                    onCloseCreate(newGroupData);
-                }
-            }
-        } catch (err) {
-            console.error('Unexpected error:', err);
-        } finally {
-            setLoading(false);
-        }
+    try {
+      const newGroupData = await createGroup(groupName, festival.id, profile!.id);
+      if (newGroupData) {
+        onCloseCreate(newGroupData);
+      } else {
+        alert('Failed to create group');
+        onCloseQuit();
+      }
+    } catch (err) {
+      console.error('Unexpected error:', err);
+    } finally {
+      setLoading(false);
     }
+  }
 
   return (
-    <>      
+    <>
       {/* Modal */}
       <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
         <div className="bg-white rounded-2xl shadow-xl p-8 max-w-md w-full max-h-[90vh] overflow-y-auto">

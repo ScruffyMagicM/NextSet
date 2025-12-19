@@ -4,16 +4,20 @@ import getUserSetPreferences from "@/supabase/actions/client/user/setPreferences
 import { Festival, Set } from "@shared/types/festival.types";
 import { useUser } from '@/contexts/UserContext';
 import { useEffect, useState } from "react";
-import { UserSet } from "@shared/types/user.types";
+import { Profile, UserSet } from "@shared/types/user.types";
 import deleteUserSetPreference from "@/supabase/actions/client/user/setPreferences/deleteUserSetPreference";
 import upsertUserSetPreference from "@/supabase/actions/client/user/setPreferences/upsertUserSetPreference";
+import { useFestival } from "@/contexts/FestivalContext";
+import { useGroup } from "@/contexts/GroupContext";
 
-export default function Lineup({ festival }: { festival: Festival }) {
+export default function Lineup({ groupPreferences }: { groupPreferences: Map<number, Profile[]> | null}) {
     const [selectedDay, setSelectedDay] = useState(0);
     const [userSets, setUserSets] = useState<Map<number, UserSet>>();
     const [isUpdating, setIsUpdating] = useState<number | null>(null);
 
     const { profile } = useUser();
+    const { festival } = useFestival();
+    const { group_id } = useGroup();
 
     const startingHour = festival.openingTimes[selectedDay];
     const endingHour = festival.closingTimes[selectedDay];
@@ -155,7 +159,7 @@ export default function Lineup({ festival }: { festival: Festival }) {
                 {festival.dayNames.map((dayName, index) => (
                     <button
                         key={index}
-                        className={`px-4 py-2 rounded ${selectedDay === index
+                        className={`px-4 py-2 rounded cursor-pointer ${selectedDay === index
                             ? 'bg-blue-500 text-white'
                             : 'bg-gray-200 text-gray-700'
                             }`}
@@ -164,6 +168,7 @@ export default function Lineup({ festival }: { festival: Festival }) {
                         {dayName}
                     </button>
                 ))}
+                <button className="px-4 py-2 rounded bg-red-500 text-white cursor-pointer" hidden={group_id === null} onClick={() => {navigator.clipboard.writeText(`https://localhost:3000/festival/${festival.id}/joingroup/${group_id}`)}}>Share</button>
             </div>
 
             {/* Grid container */}
@@ -237,8 +242,13 @@ export default function Lineup({ festival }: { festival: Festival }) {
                                                 {String(set.end_hour).padStart(2, '0')}:
                                                 {String(set.end_minute).padStart(2, '0')}
 
-                                                <div className="absolute bottom-0 right-0 bg-yellow-400 text-black px-1 rounded" hidden={!userSets?.has(set.id) || userSets?.get(set.id)?.rank === 0}>
+                                                <div className="absolute bottom-0 left-0 bg-yellow-400 text-black px-1 rounded" hidden={!userSets?.has(set.id) || userSets?.get(set.id)?.rank === 0}>
                                                     {userSets?.get(set.id)?.rank}
+                                                </div>
+                                                <div className="absolute bottom-0 right-0 bg-yellow-400 text-black px-1 rounded" hidden={groupPreferences === null || !groupPreferences?.has(set.id)}>
+                                                    {groupPreferences?.get(set.id)?.map((profile) => 
+                                                            <img src={profile.pfp_url!} alt={profile.username} className="w-4 h-4 rounded-full mr-1" />
+                                                        )}
                                                 </div>
                                             </div>
                                         </div>
