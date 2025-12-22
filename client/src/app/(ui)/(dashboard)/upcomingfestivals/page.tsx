@@ -4,7 +4,7 @@ import { Festival } from "@shared/types/festival.types";
 
 export default async function FestivalsPage() {
 
-    const festivals = await getFestivals();
+    const festivals = await getFestivals(true);
 
     const festivalsByMonth = festivals.reduce<Record<string, Festival>>((acc: any, festival) => {
         const month = new Date(festival.start_date).toLocaleString('default', { month: 'long', year: 'numeric' });
