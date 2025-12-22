@@ -6,6 +6,7 @@ import CreateGroupModal from "./createGroup.modal";
 import { useUser } from "@/contexts/UserContext";
 import { useFestival } from "@/contexts/FestivalContext";
 import { useGroup } from "@/contexts/GroupContext";
+import leaveGroup from "@/supabase/actions/client/groups/leaveGroup";
 
 export default function Groups() {
     const [isCreateModalOpen, setIsCreateModalOpen] = useState(false)
@@ -24,6 +25,17 @@ export default function Groups() {
         const newestGroups = { ...groups, ...newGroups };
         setGroups(newestGroups);
         setIsCreateModalOpen(false);
+    }
+    
+    function leaveSelectedGroup(curr_group_id: string) {
+        //TODO: add confirmation dialog
+        if(curr_group_id === group_id) {
+            setGroupId(null);
+        }
+        leaveGroup(curr_group_id, profile!.id);
+        const updatedGroups = { ...groups };
+        delete updatedGroups[curr_group_id as unknown as number];
+        setGroups(updatedGroups);
     }
 
     useEffect(() => {
@@ -45,6 +57,12 @@ export default function Groups() {
                         {Object.entries(groups).map(([curr_group_id, group]) => (
                             <li key={curr_group_id} className={"mb-2 p-4 border rounded-lg shadow" + (group_id === curr_group_id ? " bg-blue-100" : "")} onClick={() => setGroupId(curr_group_id)}>
                                 <h2 className="text-xl font-semibold">{group.name} : {group.member_count}</h2>
+                                <button
+                                    className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-1 px-2 rounded-lg transition-colors cursor-pointer"
+                                    onClick={() => leaveSelectedGroup(curr_group_id)}
+                                    >
+                                    X
+                                </button>
                             </li>
                         ))}
                     </ul>

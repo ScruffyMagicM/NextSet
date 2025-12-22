@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import LoginButton from "@/auth/ui/login.button";
-import Groups from "../../components/groups.component";
+import Groups from "./groups.component";
 import { useUser } from "@/contexts/UserContext";
 import { useGroup } from "@/contexts/GroupContext";
 
@@ -25,7 +25,7 @@ export default function SideNav() {
                 <div>Festival Details</div>
                 <Link href="/upcomingfestivals" className="block px-4 py-2 rounded hover:bg-gray-700">Back to Festivals</Link>
                 <div hidden={user === null}>
-                    <div onClick={() => setGroupId(null)}>My Schedule</div>
+                    <div className={"mb-2 p-4 border rounded-lg shadow" + (group_id === null ? " bg-blue-100" : "")} onClick={() => setGroupId(null)}>My Schedule</div>
                     <Groups />
                 </div>
                 <hr/>

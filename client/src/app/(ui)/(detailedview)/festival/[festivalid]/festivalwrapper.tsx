@@ -2,7 +2,7 @@
 
 import { GroupProvider } from "@/contexts/GroupContext";
 import { useState } from "react";
-import SideNav from "./sidenav";
+import SideNav from "@/(ui)/(detailedview)/components/sidenav.component";
 import { Festival } from "@shared/types/festival.types";
 import { FestivalProvider } from "@/contexts/FestivalContext";
 

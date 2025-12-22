@@ -1,9 +1,8 @@
 import { createClient } from '@/supabase/client';
-import { getProfile } from '@/supabase/actions/server/user/getProfile';
+import { useUser } from '@/contexts/UserContext';
 
-export default async function leaveGroup(groupId: string) {
+export default async function leaveGroup(groupId: string, userId: string) {
     const supabase = await createClient();
-    const userId = await getProfile();
 
     await supabase
         .from('usergroups')

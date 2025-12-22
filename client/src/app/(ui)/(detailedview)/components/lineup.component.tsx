@@ -1,7 +1,7 @@
 'use client';
 
 import getUserSetPreferences from "@/supabase/actions/client/user/setPreferences/getUserSetPreferences";
-import { Festival, Set } from "@shared/types/festival.types";
+import { Set } from "@shared/types/festival.types";
 import { useUser } from '@/contexts/UserContext';
 import { useEffect, useState } from "react";
 import { Profile, UserSet } from "@shared/types/user.types";
